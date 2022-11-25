@@ -55,40 +55,65 @@ export class UserService {
   async getOneUser(id: string): Promise<User> {
     let user;
     try{
-       const user = await this.userModel.findById(id);
+      user = await this.userModel.findById(id).exec();
     } catch(error){
       throw new NotFoundException('Could not find user.');
     }
     if(!user) {
       throw new NotFoundException('Could not find user.');
     }
-    return {id: user.id,
-            nom: user.nom,
-            prenom: user.prenom,
-            age: user.age
-    };
+
+    return user;
+    // return {id: user.id,
+    //         nom: user.nom,
+    //         prenom: user.prenom,
+    //         age: user.age
+    // };
   }
 
-  create(createUserDto: any) {
-    this.users.push(createUserDto);
+  async updateUser(userId: string, nom: string, prenom: string, age: number){
+    const updatedUser = await this.getOneUser(userId);
+    if(nom) {
+      updatedUser.nom = nom;
+    }
+    if(prenom) {
+      updatedUser.prenom = prenom;
+    }
+    if(age) {
+      updatedUser.age = age;
+    }
+    updatedUser.save();
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async removeUser(userId: string){
+    try{
+       await this.userModel.deleteOne({_id: userId}).exec();
+    }
+    catch(error){
+      throw new NotFoundException('Could not find user.');
+    }
   }
+
+  // create(createUserDto: any) {
+  //   this.users.push(createUserDto);
+  // }
+
+  // findAll() {
+  //   return `This action returns all user`;
+  // }
 
   // findOne(id: number) {
   //   return this.users.find(item => item.id === +id);
   //   // return `This action returns a #${id} user`;
   // }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 
   // login(loginUserDto: LoginUserDto, id: string) {
   //   if(this.users.find(item => item.id === +id) != undefined){

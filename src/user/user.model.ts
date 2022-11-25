@@ -7,7 +7,7 @@ export const UserSchema = new mongoose.Schema({
     age: Number,
 });
 
-export interface User {
+export interface User extends mongoose.Document{
     id: string;
     nom: string;
     prenom: string;
