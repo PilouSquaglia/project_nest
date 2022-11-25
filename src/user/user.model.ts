@@ -1,16 +1,15 @@
+import { SrvRecord } from 'dns';
 import * as mongoose from 'mongoose'
 
 export const UserSchema = new mongoose.Schema({
-    nom: {type: String, required: true},
+    nom: String,
     prenom: String,
     age: Number,
 });
 
-export class User {
-    constructor(
-        public id: string,
-        public nom: string,
-        public prenom: string,
-        public age: number,
-    ){}
+export interface User {
+    id: string;
+    nom: string;
+    prenom: string;
+    age: number;
 }

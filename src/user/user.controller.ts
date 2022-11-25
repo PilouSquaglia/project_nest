@@ -3,14 +3,29 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { isGeneratorFunction } from 'util/types';
+import { User } from './user.model';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // @Post()
+  // create(@Body() createUserDto: CreateUserDto) {
+  //   return this.userService.create(createUserDto);
+  // }
+
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async addUser(@Body('nom') userNom: string,
+          @Body('prenom') userPrenom: string,
+          @Body('age') userAge: number,
+  ){
+    const generatedId = await this.userService.insertUser(
+      userNom,
+      userPrenom,
+      userAge,
+    );
+    return {id: generatedId };
   }
 
   @Get()

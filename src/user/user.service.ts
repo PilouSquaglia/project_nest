@@ -4,7 +4,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 // import { User } from './entities/user.entity';
 import { User } from './user.model';
-
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 @Injectable()
 export class UserService {
 
@@ -26,10 +27,23 @@ export class UserService {
   //   });
   // }
 
-  insertProduct(nom: string, prenom: string, age: number){
-    const userId = Math.random().toString();
-    const newUser = new User(userId, nom, prenom, age);
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+
+  async insertUser(nom: string, prenom: string, age: number){
+    const newUser = new this.userModel({
+      nom: nom,
+      prenom: prenom,
+      age: age
+    });
+   const result = await newUser.save();
+   return result.id as string;
   }
+
+  getUsers(){
+    this.userModel
+    return [...this.users];
+  }
+
 
   create(createUserDto: any) {
     this.users.push(createUserDto);
