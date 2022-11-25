@@ -17,20 +17,20 @@ export class UserController {
 
   @Post()
   async addUser(@Body('nom') userNom: string,
-          @Body('prenom') userPrenom: string,
-          @Body('age') userAge: number,
-  ){
-    const generatedId = await this.userService.insertUser(
-      userNom,
-      userPrenom,
-      userAge,
-    );
-    return {id: generatedId };
-  }
+                @Body('prenom') userPrenom: string,
+                @Body('age') userAge: number,
+          ){
+              const generatedId = await this.userService.insertUser(
+                userNom,
+                userPrenom,
+                userAge,
+              );
+              return {id: generatedId };
+            }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  getAllUsers(){
+    return this.userService.getUsers();
   }
 
   // @Get(':id')

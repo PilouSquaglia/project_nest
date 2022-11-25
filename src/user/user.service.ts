@@ -39,9 +39,10 @@ export class UserService {
    return result.id as string;
   }
 
-  getUsers(){
-    this.userModel
-    return [...this.users];
+  async getUsers(){
+     const users = await this.userModel.find();
+    console.log(users);
+    return users;
   }
 
 
