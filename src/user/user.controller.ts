@@ -18,10 +18,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.userService.findOne(+id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -33,9 +33,9 @@ export class UserController {
     return this.userService.remove(+id);
   }
 
-  @Get('login')
-  login(@Body() loginUserDto: LoginUserDto, @Param('id') id: string){
-    return this.userService.login(loginUserDto, id);
-  }
+  // @Get('login')
+  // login(@Body() loginUserDto: LoginUserDto, @Param('id') id: string){
+  //   return this.userService.login(loginUserDto, id);
+  // }
 
 }

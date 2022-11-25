@@ -2,27 +2,33 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+// import { User } from './entities/user.entity';
+import { User } from './user.model';
 
 @Injectable()
 export class UserService {
 
   private readonly users: User[] = [];
 
-  constructor() {
-    this.users.push({
-      id: 1,
-      name: 'Name',
-      email: 'name@email.com',
-      password: 'password',
-    });
+  // constructor() {
+  //   this.users.push({
+  //     id: 1,
+  //     name: 'Name',
+  //     email: 'name@email.com',
+  //     password: 'password',
+  //   });
 
-    this.users.push({
-      id: 2,
-      name: 'Test',
-      email: 'aa@email.com',
-      password: 'aa',
-    });
+  //   this.users.push({
+  //     id: 2,
+  //     name: 'Test',
+  //     email: 'aa@email.com',
+  //     password: 'aa',
+  //   });
+  // }
+
+  insertProduct(nom: string, prenom: string, age: number){
+    const userId = Math.random().toString();
+    const newUser = new User(userId, nom, prenom, age);
   }
 
   create(createUserDto: any) {
@@ -33,10 +39,10 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
-    return this.users.find(item => item.id === +id);
-    // return `This action returns a #${id} user`;
-  }
+  // findOne(id: number) {
+  //   return this.users.find(item => item.id === +id);
+  //   // return `This action returns a #${id} user`;
+  // }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
@@ -46,12 +52,12 @@ export class UserService {
     return `This action removes a #${id} user`;
   }
 
-  login(loginUserDto: LoginUserDto, id: string) {
-    if(this.users.find(item => item.id === +id) != undefined){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
+  // login(loginUserDto: LoginUserDto, id: string) {
+  //   if(this.users.find(item => item.id === +id) != undefined){
+  //     return true;
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // }
 }
