@@ -12,16 +12,22 @@ export class UserService {
   constructor() {
     this.users.push({
       id: 1,
-      name: 'Name',
+      name: 'Name1',
       email: 'name@email.com',
       password: 'password',
     });
 
     this.users.push({
       id: 2,
-      name: 'Test',
+      name: 'Test2',
       email: 'aa@email.com',
       password: 'aa',
+    });
+    this.users.push({
+      id: 3,
+      name: 'Test3',
+      email: 'bb@email.com',
+      password: 'bb',
     });
   }
 
@@ -30,7 +36,7 @@ export class UserService {
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.users;
   }
 
   findOne(id: number) {
