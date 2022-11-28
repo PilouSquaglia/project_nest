@@ -13,7 +13,7 @@ export class UserService {
 
   private readonly users: User[] = [];
 
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async insertUser(nom: string, prenom: string, age: number) {
     const newUser = new this.userModel({
