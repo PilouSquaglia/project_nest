@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './user.model';
+import { UserTest } from './user-test.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 @Injectable()
-export class UserService {
+export class UserTestService {
 
-  private readonly users: User[] = [];
+  private readonly usersTest: UserTest[] = [];
 
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(@InjectModel('UserTest') private readonly userModel: Model<UserTest>) {}
 
-  async insertUser(nom: string, prenom: string, age: number) {
-    const newUser = new this.userModel({
+  async insertUserTest(nom: string, prenom: string, age: number) {
+    const newUserTest = new this.userModel({
       nom: nom,
       prenom: prenom,
       age: age
     });
-    const result = await newUser.save();
+    const result = await newUserTest.save();
     return result.id as string;
   }
 
-  async getUsers() {
+  async getUserTests() {
     const user = await this.userModel.find();
     console.log(user);
     return user.map(user => ({
@@ -31,7 +31,7 @@ export class UserService {
      }));
   }
 
-  async getOneUser(id: string): Promise<User> {
+  async getOneUserTest(id: string): Promise<UserTest> {
     let user;
     try{
       user = await this.userModel.findById(id).exec();
@@ -50,21 +50,21 @@ export class UserService {
     // };
   }
 
-  async updateUser(userId: string, nom: string, prenom: string, age: number){
-    const updatedUser = await this.getOneUser(userId);
+  async updateUserTest(userId: string, nom: string, prenom: string, age: number){
+    const updatedUserTest = await this.getOneUserTest(userId);
     if(nom) {
-      updatedUser.nom = nom;
+      updatedUserTest.nom = nom;
     }
     if(prenom) {
-      updatedUser.prenom = prenom;
+      updatedUserTest.prenom = prenom;
     }
     if(age) {
-      updatedUser.age = age;
+      updatedUserTest.age = age;
     }
-    updatedUser.save();
+    updatedUserTest.save();
   }
 
-  async removeUser(userId: string){
+  async removeUserTest(userId: string){
     try{
        await this.userModel.deleteOne({_id: userId}).exec();
     }
