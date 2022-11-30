@@ -23,7 +23,7 @@ export class UserService {
 
   async getUsers() {
     const user = await this.userModel.find();
-    console.log(user);
+    // console.log(user);
     let res = user.map(user => ({
       id: user.id,
       nom: user.nom,
@@ -31,8 +31,11 @@ export class UserService {
       age: user.age,
       password: user.password,
      }));
+     res.forEach(element => {
+      console.log(element);
+      //this.users.push(element);
+    });
     return res;
-    //  this.users.push(res);
   }
 
   async getOneUser(id: string): Promise<User> {
@@ -52,6 +55,19 @@ export class UserService {
     //         email: user.email,
     //         age: user.age
     // };
+  }
+
+  async getOneUserEmail(email: string): Promise<User> {
+    let user;
+    try{
+      user = await this.userModel.find({email: email}).exec();
+    } catch(error){
+      throw new NotFoundException('Could not find user with email.');
+    }
+    if(!user) {
+      throw new NotFoundException('Could not find user with email 2.');
+    }
+    return user;
   }
 
   async updateUser(userId: string, nom: string, email: string, age: number, password: string){

@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Login } from './login.model';
+import { UserService } from 'src/user/user.service';
+
 
 @Injectable()
 export class LoginService {
-  create(createLoginDto: CreateLoginDto) {
-    return 'This action adds a new login';
-  }
 
-  findAll() {
-    return `This action returns all login`;
-  }
+  private readonly login: Login[] = [];
+  private readonly UserService;
 
-  findOne(id: number) {
-    return `This action returns a #${id} login`;
-  }
+  constructor(@InjectModel('Login') private readonly loginModel: Model<Login>){}
 
-  update(id: number, updateLoginDto: UpdateLoginDto) {
-    return `This action updates a #${id} login`;
-  }
+  async loginUsers(email: string, password: string){
+    if(email && password){
+      let searchUser = await this.UserService.getOneUserEmail(email);
+      if(searchUser.password==password){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} login`;
   }
 }

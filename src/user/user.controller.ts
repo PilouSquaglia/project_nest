@@ -26,9 +26,14 @@ export class UserController {
     return this.userService.getUsers();
   }
 
-  @Get(':id')
-  getOneUser(@Param('id') userId: string){
-    return this.userService.getOneUser(userId);
+  // @Get(':id')
+  // getOneUser(@Param('id') userId: string){
+  //   return this.userService.getOneUser(userId);
+  // }
+
+  @Get(':email')
+  getOneUserEmail(@Param('email') userEmail: string){
+    return this.userService.getOneUserEmail(userEmail);
   }
 
   @Patch(':id')
