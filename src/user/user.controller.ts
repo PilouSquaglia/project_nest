@@ -1,41 +1,45 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+  async addUser(@Body('nom') userNom: string,
+                @Body('prenom') userPrenom: string,
+                @Body('age') userAge: number,
+          ){
+              const generatedId = await this.userService.insertUser(
+                userNom,
+                userPrenom,
+                userAge,
+              );
+              return {id: generatedId };
+            }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  getAllUsers(){
+    return this.userService.getUsers();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  getOneUser(@Param('id') userId: string){
+    return this.userService.getOneUser(userId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  async update(@Param('id') id: string,
+         @Body('nom') userNom: string,
+         @Body('prenom') userPrenom: string,
+         @Body('age') userAge: number,
+  ) {
+    await this.userService.updateUser(id, userNom, userPrenom, userAge);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  async removeUser(@Param('id') id: string) {
+    await this.userService.removeUser(id);
   }
-
-  @Get('login')
-  login(@Body() loginUserDto: LoginUserDto, @Param('id') id: string){
-    return this.userService.login(loginUserDto, id);
-  }
-
 }
