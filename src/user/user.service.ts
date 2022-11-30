@@ -10,11 +10,12 @@ export class UserService {
 
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
-  async insertUser(nom: string, prenom: string, age: number) {
+  async insertUser(nom: string, email: string, age: number, password: string) {
     const newUser = new this.userModel({
       nom: nom,
-      prenom: prenom,
-      age: age
+      email: email,
+      age: age,
+      password: password,
     });
     const result = await newUser.save();
     return result.id as string;
@@ -23,12 +24,15 @@ export class UserService {
   async getUsers() {
     const user = await this.userModel.find();
     console.log(user);
-    return user.map(user => ({
+    let res = user.map(user => ({
       id: user.id,
       nom: user.nom,
-      prenom: user.prenom,
-      age: user.age
+      email: user.email,
+      age: user.age,
+      password: user.password,
      }));
+    return res;
+    //  this.users.push(res);
   }
 
   async getOneUser(id: string): Promise<User> {
@@ -45,21 +49,24 @@ export class UserService {
     return user;
     // return {id: user.id,
     //         nom: user.nom,
-    //         prenom: user.prenom,
+    //         email: user.email,
     //         age: user.age
     // };
   }
 
-  async updateUser(userId: string, nom: string, prenom: string, age: number){
+  async updateUser(userId: string, nom: string, email: string, age: number, password: string){
     const updatedUser = await this.getOneUser(userId);
     if(nom) {
       updatedUser.nom = nom;
     }
-    if(prenom) {
-      updatedUser.prenom = prenom;
+    if(email) {
+      updatedUser.email = email;
     }
     if(age) {
       updatedUser.age = age;
+    }
+    if(password) {
+      updatedUser.password = password;
     }
     updatedUser.save();
   }

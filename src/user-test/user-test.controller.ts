@@ -8,12 +8,12 @@ export class UserTestController {
 
   @Post()
   async addUserTest(@Body('nom') userNom: string,
-                @Body('prenom') userPrenom: string,
+                @Body('email') userEmail: string,
                 @Body('age') userAge: number,
           ){
               const generatedId = await this.userService.insertUserTest(
                 userNom,
-                userPrenom,
+                userEmail,
                 userAge,
               );
               return {id: generatedId };
@@ -32,10 +32,10 @@ export class UserTestController {
   @Patch(':id')
   async update(@Param('id') id: string,
          @Body('nom') userNom: string,
-         @Body('prenom') userPrenom: string,
+         @Body('email') userEmail: string,
          @Body('age') userAge: number,
   ) {
-    await this.userService.updateUserTest(id, userNom, userPrenom, userAge);
+    await this.userService.updateUserTest(id, userNom, userEmail, userAge);
   }
 
   @Delete(':id')

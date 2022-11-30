@@ -10,11 +10,11 @@ export class UserTestService {
 
   constructor(@InjectModel('UserTest') private readonly userModel: Model<UserTest>) {}
 
-  async insertUserTest(nom: string, prenom: string, age: number) {
+  async insertUserTest(nom: string, email: string, age: number) {
     const newUserTest = new this.userModel({
       nom: nom,
-      prenom: prenom,
-      age: age
+      email: email,
+      age: age,
     });
     const result = await newUserTest.save();
     return result.id as string;
@@ -26,7 +26,7 @@ export class UserTestService {
     return user.map(user => ({
       id: user.id,
       nom: user.nom,
-      prenom: user.prenom,
+      email: user.email,
       age: user.age
      }));
   }
@@ -45,18 +45,18 @@ export class UserTestService {
     return user;
     // return {id: user.id,
     //         nom: user.nom,
-    //         prenom: user.prenom,
+    //         email: user.email,
     //         age: user.age
     // };
   }
 
-  async updateUserTest(userId: string, nom: string, prenom: string, age: number){
+  async updateUserTest(userId: string, nom: string, email: string, age: number){
     const updatedUserTest = await this.getOneUserTest(userId);
     if(nom) {
       updatedUserTest.nom = nom;
     }
-    if(prenom) {
-      updatedUserTest.prenom = prenom;
+    if(email) {
+      updatedUserTest.email = email;
     }
     if(age) {
       updatedUserTest.age = age;
