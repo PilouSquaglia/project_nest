@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserTestModule } from './user-test/user-test.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [UserModule, LoginModule, UserTestModule, MongooseModule.forRoot(
