@@ -60,7 +60,7 @@ export class UserService {
   async getOneUserEmail(email: string): Promise<User> {
     let user;
     try{
-      user = await this.userModel.find({email: email}).exec();
+      user = await this.userModel.findOne({email: email}).exec();
     } catch(error){
       throw new NotFoundException('Could not find user with email.');
     }

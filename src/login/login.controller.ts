@@ -9,13 +9,13 @@ export class LoginController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   login(@Body() body) {
-    console.log(body);
+    return this.loginService.loginUsers(body);
   }
 
   @Get()
-  @UseInterceptors(FileInterceptor('file'))
-  get(@Body() body) {
-    return body;
+  get() {
+    console.log("Get Passed");
+    return "Get Passed";
   }
 
   // @Get()

@@ -1,4 +1,3 @@
-import { SrvRecord } from 'dns';
 import * as mongoose from 'mongoose'
 
 export const UserSchema = new mongoose.Schema({
