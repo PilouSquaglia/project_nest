@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Redirect } from '@nestjs/common/decorators';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { LoginService } from './login.service';
 
@@ -7,7 +8,6 @@ export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
   login(@Body() body) {
     return this.loginService.loginUsers(body);
   }
@@ -15,7 +15,7 @@ export class LoginController {
   @Get()
   get() {
     console.log("Get Passed");
-    return "Get Passed";
+    Redirect('http://localhost:4200/user');
   }
 
   // @Get()
