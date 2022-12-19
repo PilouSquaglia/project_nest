@@ -12,19 +12,23 @@ export class LoginService {
   private readonly login: Login[] = [];
 
   constructor(@InjectModel('Login') private readonly loginModel: Model<Login>,
-              private userService: UserService){}
+    private userService: UserService) { }
 
-  async loginUsers(values: JSON){
+  async loginUsers(values: JSON) {
     let json = JSON.stringify(values);
     let parsedJson = JSON.parse(json);
     console.log(parsedJson.email);
-    if(parsedJson.email && parsedJson.password){
+    console.log(parsedJson.password);
+    if (parsedJson.email && parsedJson.password) {
       let searchUser = await this.userService.getOneUserEmail(parsedJson.email);
-      if(searchUser.password==parsedJson.password){
-        console.log(true);
-        Redirect("http://localhost:4200/user");
+      if (searchUser != null) {
+        console.log("SeachUser password : " + searchUser.password)
+        if (searchUser.password == parsedJson.password) {
+          console.log(true);
+          return true;
+        }
       }
-      else{
+      else {
         console.log(false);
         return false;
       }

@@ -9,6 +9,7 @@ export class LoginController {
 
   @Post()
   login(@Body() body) {
+    console.log("Post Passed");
     return this.loginService.loginUsers(body);
   }
 

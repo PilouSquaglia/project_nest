@@ -65,7 +65,8 @@ export class UserService {
       throw new NotFoundException('Could not find user with email.');
     }
     if(!user) {
-      throw new NotFoundException('Could not find user with email 2.');
+      // throw new NotFoundException('Could not find user with email 2.');
+      user = null;
     }
     return user;
   }
