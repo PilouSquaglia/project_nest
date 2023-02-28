@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { Redirect } from '@nestjs/common/decorators';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { LoginService } from './login.service';
@@ -9,13 +17,13 @@ export class LoginController {
 
   @Post()
   login(@Body() body) {
-    console.log("Post Passed");
+    console.log('Post Passed');
     return this.loginService.loginUsers(body);
   }
 
   @Get()
   get() {
-    console.log("Get Passed");
+    console.log('Get Passed');
     Redirect('http://localhost:4200/user');
   }
 

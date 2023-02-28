@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 @Injectable()
 export class UserService {
-
   private readonly users: User[] = [];
 
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
@@ -24,14 +23,14 @@ export class UserService {
   async getUsers() {
     const user = await this.userModel.find();
     // console.log(user);
-    let res = user.map(user => ({
+    const res = user.map((user) => ({
       id: user.id,
       nom: user.nom,
       email: user.email,
       age: user.age,
       password: user.password,
-     }));
-     res.forEach(element => {
+    }));
+    res.forEach((element) => {
       console.log(element);
       //this.users.push(element);
     });
@@ -40,12 +39,12 @@ export class UserService {
 
   async getOneUser(id: string): Promise<User> {
     let user;
-    try{
+    try {
       user = await this.userModel.findById(id).exec();
-    } catch(error){
+    } catch (error) {
       throw new NotFoundException('Could not find user.');
     }
-    if(!user) {
+    if (!user) {
       throw new NotFoundException('Could not find user.');
     }
 
@@ -59,40 +58,45 @@ export class UserService {
 
   async getOneUserEmail(email: string): Promise<User> {
     let user;
-    try{
-      user = await this.userModel.findOne({email: email}).exec();
-    } catch(error){
+    try {
+      user = await this.userModel.findOne({ email: email }).exec();
+    } catch (error) {
       throw new NotFoundException('Could not find user with email.');
     }
-    if(!user) {
+    if (!user) {
       // throw new NotFoundException('Could not find user with email 2.');
       user = null;
     }
     return user;
   }
 
-  async updateUser(userId: string, nom: string, email: string, age: number, password: string){
+  async updateUser(
+    userId: string,
+    nom: string,
+    email: string,
+    age: number,
+    password: string,
+  ) {
     const updatedUser = await this.getOneUser(userId);
-    if(nom) {
+    if (nom) {
       updatedUser.nom = nom;
     }
-    if(email) {
+    if (email) {
       updatedUser.email = email;
     }
-    if(age) {
+    if (age) {
       updatedUser.age = age;
     }
-    if(password) {
+    if (password) {
       updatedUser.password = password;
     }
     updatedUser.save();
   }
 
-  async removeUser(userId: string){
-    try{
-       await this.userModel.deleteOne({_id: userId}).exec();
-    }
-    catch(error){
+  async removeUser(userId: string) {
+    try {
+      await this.userModel.deleteOne({ _id: userId }).exec();
+    } catch (error) {
       throw new NotFoundException('Could not find user.');
     }
   }

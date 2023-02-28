@@ -1,11 +1,11 @@
-import * as mongoose from 'mongoose'
+import * as mongoose from 'mongoose';
 
 export const LoginSchema = new mongoose.Schema({
-    email: String,
-    password: String,
+  email: String,
+  password: String,
 });
 
-export interface Login extends mongoose.Document{
-    email: string;
-    password: string;
+export interface Login extends mongoose.Document {
+  email: string;
+  password: string;
 }

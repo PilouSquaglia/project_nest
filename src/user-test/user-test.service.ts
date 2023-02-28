@@ -5,10 +5,11 @@ import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 @Injectable()
 export class UserTestService {
-
   private readonly usersTest: UserTest[] = [];
 
-  constructor(@InjectModel('UserTest') private readonly userModel: Model<UserTest>) {}
+  constructor(
+    @InjectModel('UserTest') private readonly userModel: Model<UserTest>,
+  ) {}
 
   async insertUserTest(nom: string, email: string, age: number) {
     const newUserTest = new this.userModel({
@@ -23,22 +24,22 @@ export class UserTestService {
   async getUserTests() {
     const user = await this.userModel.find();
     console.log(user);
-    return user.map(user => ({
+    return user.map((user) => ({
       id: user.id,
       nom: user.nom,
       email: user.email,
-      age: user.age
-     }));
+      age: user.age,
+    }));
   }
 
   async getOneUserTest(id: string): Promise<UserTest> {
     let user;
-    try{
+    try {
       user = await this.userModel.findById(id).exec();
-    } catch(error){
+    } catch (error) {
       throw new NotFoundException('Could not find user.');
     }
-    if(!user) {
+    if (!user) {
       throw new NotFoundException('Could not find user.');
     }
 
@@ -50,25 +51,29 @@ export class UserTestService {
     // };
   }
 
-  async updateUserTest(userId: string, nom: string, email: string, age: number){
+  async updateUserTest(
+    userId: string,
+    nom: string,
+    email: string,
+    age: number,
+  ) {
     const updatedUserTest = await this.getOneUserTest(userId);
-    if(nom) {
+    if (nom) {
       updatedUserTest.nom = nom;
     }
-    if(email) {
+    if (email) {
       updatedUserTest.email = email;
     }
-    if(age) {
+    if (age) {
       updatedUserTest.age = age;
     }
     updatedUserTest.save();
   }
 
-  async removeUserTest(userId: string){
-    try{
-       await this.userModel.deleteOne({_id: userId}).exec();
-    }
-    catch(error){
+  async removeUserTest(userId: string) {
+    try {
+      await this.userModel.deleteOne({ _id: userId }).exec();
+    } catch (error) {
       throw new NotFoundException('Could not find user.');
     }
   }

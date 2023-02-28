@@ -6,7 +6,7 @@ import { UserSchema } from './user.model';
 import { Injectable } from '@nestjs/common/decorators';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name: 'User', schema: UserSchema}])],
+  imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

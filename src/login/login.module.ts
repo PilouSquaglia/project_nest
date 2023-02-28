@@ -7,7 +7,10 @@ import { UserService } from 'src/user/user.service';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name: 'Login', schema: LoginSchema}]), UserModule],
+  imports: [
+    MongooseModule.forFeature([{ name: 'Login', schema: LoginSchema }]),
+    UserModule,
+  ],
   controllers: [LoginController],
   providers: [LoginService],
 })

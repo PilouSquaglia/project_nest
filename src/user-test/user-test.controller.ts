@@ -1,39 +1,48 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserTestService } from './user-test.service';
 
 @Controller('userTest')
 export class UserTestController {
   constructor(private readonly userService: UserTestService) {}
 
-
   @Post()
-  async addUserTest(@Body('nom') userNom: string,
-                @Body('email') userEmail: string,
-                @Body('age') userAge: number,
-          ){
-              const generatedId = await this.userService.insertUserTest(
-                userNom,
-                userEmail,
-                userAge,
-              );
-              return {id: generatedId };
-            }
+  async addUserTest(
+    @Body('nom') userNom: string,
+    @Body('email') userEmail: string,
+    @Body('age') userAge: number,
+  ) {
+    const generatedId = await this.userService.insertUserTest(
+      userNom,
+      userEmail,
+      userAge,
+    );
+    return { id: generatedId };
+  }
 
   @Get()
-  getAllUserTests(){
+  getAllUserTests() {
     return this.userService.getUserTests();
   }
 
   @Get(':id')
-  getOneUserTest(@Param('id') userId: string){
+  getOneUserTest(@Param('id') userId: string) {
     return this.userService.getOneUserTest(userId);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string,
-         @Body('nom') userNom: string,
-         @Body('email') userEmail: string,
-         @Body('age') userAge: number,
+  async update(
+    @Param('id') id: string,
+    @Body('nom') userNom: string,
+    @Body('email') userEmail: string,
+    @Body('age') userAge: number,
   ) {
     await this.userService.updateUserTest(id, userNom, userEmail, userAge);
   }
